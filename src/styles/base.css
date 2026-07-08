@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@theme {
+  --font-jetbrain: "JetBrains Mono", monospace;
+
+  --color-neutral-900: #0a0a0a;
+  --color-neutral-700: #171719;
+  --color-neutral-600: #202022;
+  --color-neutral-500: #2e2e2e;
+  --color-neutral-400: #3d3d3d;
+  --color-neutral-300: #454547;
+  --color-neutral-200: #9d9d9d;
+  --color-neutral-100: #c6c6c6;
+  --color-neutral-50: #ffffff;
+
+  --color-lime-500: #cef739;
+  --color-lime-800: #283300;
+
+  --color-green-500: #42eb05;
+
+  --color-red-500: #ff4141;
+}
+
+@layer base {
+  body {
+    @apply bg-neutral-900 font-jetbrain;
+    @apply text-neutral-50;
+  }
+}
+
+@utility tp-1 {
+  font-size: 40px;
+  line-height: 100%;
+  font-family: var(--font-jetbrain);
+  font-optical-sizing: auto;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.5px;
+}
+
+@utility tp-1-tablet {
+  font-size: 32px;
+  line-height: 100%;
+  font-family: var(--font-jetbrain);
+  font-optical-sizing: auto;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.5px;
+}
+
+@utility tp-2 {
+  font-size: 20px;
+  line-height: 120%;
+  font-family: var(--font-jetbrain);
+  font-optical-sizing: auto;
+  font-weight: var(--font-weight-normal);
+  letter-spacing: -0.5px;
+}
+
+@utility tp-2-bold {
+  font-size: 20px;
+  line-height: 140%;
+  font-family: var(--font-jetbrain);
+  font-optical-sizing: auto;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: -0.5px;
+}
+
+@utility tp-3 {
+  font-size: 16px;
+  line-height: 120%;
+  font-family: var(--font-jetbrain);
+  font-optical-sizing: auto;
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 1px;
+}
+
+@utility tp-3-medium {
+  font-size: 16px;
+  line-height: 120%;
+  font-family: var(--font-jetbrain);
+  font-optical-sizing: auto;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 1px;
+}
+
+@utility tp-3-bold {
+  font-size: 16px;
+  line-height: 110%;
+  font-family: var(--font-jetbrain);
+  font-optical-sizing: auto;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 1px;
+}
+
+@utility tp-4 {
+  font-size: 14px;
+  line-height: 120%;
+  font-family: var(--font-jetbrain);
+  font-optical-sizing: auto;
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 1px;
+}
+
+@utility tp-5 {
+  font-size: 12px;
+  line-height: 120%;
+  font-family: var(--font-jetbrain);
+  font-optical-sizing: auto;
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 0.5px;
+}
+
+@utility tp-5-medium {
+  font-size: 12px;
+  line-height: 130%;
+  font-family: var(--font-jetbrain);
+  font-optical-sizing: auto;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.5px;
+}
+
+@utility tp-6 {
+  font-size: 10px;
+  line-height: 100%;
+  font-family: var(--font-jetbrain);
+  font-optical-sizing: auto;
+  font-weight: var(--font-weight-normal);
+  letter-spacing: 0px;
+}
