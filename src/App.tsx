@@ -5,11 +5,13 @@
 import "./styles/base.css";
 import "./styles/global.css";
 import Header from "./components/sections/header";
+import Main from "./components/sections/main";
 
 function App() {
   return (
     <>
       <Header />
+      <Main />
     </>
   );
 }

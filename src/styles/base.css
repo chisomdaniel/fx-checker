@@ -19,6 +19,12 @@
   --color-green-500: #42eb05;
 
   --color-red-500: #ff4141;
+
+  --shadow-tab:
+    0 0 0 2px var(--color-neutral-900), 0 0 0 4px var(--color-lime-500);
+
+  --shadow-period:
+    0 0 0 3px var(--color-neutral-700), 0 0 0 4px var(--color-lime-500);
 }
 
 @layer base {

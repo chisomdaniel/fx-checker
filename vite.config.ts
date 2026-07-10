@@ -12,9 +12,9 @@ export default defineConfig({
     tailwindcss(),
     svgr(),
   ],
-  // resolve: {
-  //   alias: {
-  //     "@": "/src",
-  //   },
-  // },
+  resolve: {
+    alias: {
+      "@": "/src",
+    },
+  },
 });

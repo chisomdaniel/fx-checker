@@ -5,7 +5,7 @@ export default function LiveMarket() {
   return (
     <>
       <div className="flex items-center overflow-x-hidden bg-neutral-700">
-        <div className="px-4 py-3 bg-lime-500 w-34.75 flex flex-none items-center justify-center gap-2 text-neutral-900 tp-5-medium">
+        <div className="px-2 md:px-4 py-3 bg-lime-500 flex flex-none items-center justify-center gap-2 text-neutral-900 tp-6 md:tp-5-medium">
           <Dot size={6} strokeWidth={20} stroke="#0A0A0A" />
           <p>LIVE MARKETS</p>
         </div>
