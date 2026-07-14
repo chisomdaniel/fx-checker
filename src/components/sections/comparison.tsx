@@ -17,21 +17,21 @@ export default function Comparison() {
           currency="Nigerian Naira"
           rate={1350}
           favorite={true}
-          id="ngn"
+          key="ngn"
         />
         <CompareItem
           countryCode="USD"
           amount={1000}
           currency="US Dollar"
           rate={765}
-          id="usd"
+          key="usd"
         />
         <CompareItem
           countryCode="GBP"
           amount={1000}
           currency="British Pound"
           rate={556}
-          id="gbp"
+          key="gbp"
         />
       </div>
     </section>

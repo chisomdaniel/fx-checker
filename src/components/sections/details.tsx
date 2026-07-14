@@ -3,6 +3,7 @@ import { TABS } from "../../data/details";
 import History from "./history";
 import Comparison from "./comparison";
 import Favorites from "./favorites";
+import Log from "./log";
 
 export default function Details() {
   const counts = [4, 0, 0, 5];
@@ -12,6 +13,7 @@ export default function Details() {
       <History currPeriod="1M" />
       <Comparison />
       <Favorites />
+      <Log />
     </section>
   );
 }

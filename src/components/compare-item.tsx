@@ -7,18 +7,18 @@ export default function CompareItem({
   rate,
   amount,
   favorite,
-  id,
+  key,
 }: {
   countryCode: string;
   currency: string;
   rate: number;
   amount: number;
   favorite?: boolean;
-  id: string;
+  key: string;
 }) {
   return (
     <div
-      id={id}
+      id={key}
       className="flex gap-2.5 md:gap-5 items-center p-3 md:px-4 rounded-[10px] bg-neutral-600 border-neutral-500 border focus:shadow-tab"
       tabIndex={0}
     >
