@@ -1,8 +1,8 @@
 import { TABS } from "@/data/details";
 import { cn } from "@/utils/cn";
 import { ChevronDown } from "lucide-react";
-
-type tabs = (typeof TABS)[number];
+import { useState } from "react";
+import type { tabs } from "@/types/details";
 
 function Badge({ num }: { num: number }) {
   return (
@@ -16,11 +16,29 @@ export default function DetailsTab({
   items,
   counts = [],
   activeTab = "HISTORY",
+  setActiveTab,
 }: {
   items: typeof TABS;
   counts: number[];
   activeTab: tabs;
+  setActiveTab: (tab: tabs) => void;
 }) {
+  const [tabState, setTabState] = useState<"open" | "close">("close");
+
+  function handleToggle() {
+    if (tabState === "close") {
+      setTabState("open");
+    } else {
+      setTabState("close");
+    }
+  }
+
+  function handleSelect(e: React.MouseEvent<HTMLAnchorElement>, tab: tabs) {
+    e.preventDefault();
+    setActiveTab(tab);
+    setTabState("close");
+  }
+
   return (
     <>
       {/* for desktop/tablet screen */}
@@ -33,7 +51,7 @@ export default function DetailsTab({
                 activeTab === item &&
                   "after:absolute after:left-0 after:bottom-0 after:w-full after:h-px after:bg-lime-500",
               )}
-              href="#"
+              onClick={(e) => handleSelect(e, item)}
             >
               {item}
               {counts[index] > 0 && <Badge num={counts[index]} />}
@@ -41,31 +59,41 @@ export default function DetailsTab({
           </li>
         ))}
       </ul>
+
       {/* for mobile screen */}
-      <div className="md:hidden relative w-85.75">
-        <select
+      <div aria-label="dropdown" className="md:hidden relative inline-block">
+        <button
+          aria-label="dropbtn"
           className={cn(
-            "w-full h-10 pl-3 pr-11 rounded-lg bg-neutral-700 border border-neutral-400",
-            "appearance-none focus:outline-none focus:shadow-tab",
+            "w-full flex justify-between items-center h-10 px-3 rounded-lg bg-neutral-700 border border-neutral-400",
+            "focus:outline-none focus:shadow-tab cursor-pointer",
           )}
-          defaultValue={activeTab}
+          onClick={handleToggle}
         >
-          {items.map((item, index) => (
-            <option
-              className="border-neutral-600"
-              key={item}
-              id={index.toString()}
-              value={item}
+          <div className="flex gap-2 items-center">
+            <span>{activeTab}</span>
+            <Badge num={10} />
+          </div>
+          <ChevronDown />
+        </button>
+        <div
+          aria-label="dropdown content"
+          className={cn(
+            "hidden absolute w-full overflow-y-auto z-1 p-2 rounded-[10px] bg-neutral-700",
+            tabState === "open" ? "block" : "",
+          )}
+        >
+          {items.map((item, idx) => (
+            <a
+              key={idx}
+              onClick={(e) => handleSelect(e, item)}
+              className="no-underline flex grow justify-between h-10 px-2 py-2.5 "
             >
-              {item}
-              {counts[index] > 0 && <Badge num={counts[index]} />}
-            </option>
+              <span>{item}</span>
+              {counts[idx] > 0 && <Badge num={counts[idx]} />}
+            </a>
           ))}
-        </select>
-        <ChevronDown
-          aria-hidden="true"
-          className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-neutral-400"
-        />
+        </div>
       </div>
     </>
   );

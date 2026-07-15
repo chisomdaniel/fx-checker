@@ -25,6 +25,8 @@
 
   --shadow-period:
     0 0 0 3px var(--color-neutral-700), 0 0 0 4px var(--color-lime-500);
+
+  --shadow-dropdown: 0 20px 60px 0 rgba(10, 10, 10, 0.5);
 }
 
 @layer base {

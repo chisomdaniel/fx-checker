@@ -6,7 +6,7 @@ export default function Converter() {
   return (
     <section>
       <h1 className="tp-2 mb-4">CHECK THE RATE</h1>
-      <div className="overflow-hidden rounded-[20px] bg-neutral-700 shadow-[0_12px_40px_0_rgba(0, 0, 0, 0.4)]">
+      <div className="rounded-[20px] bg-neutral-700 shadow-[0_12px_40px_0_rgba(0, 0, 0, 0.4)]">
         <div
           aria-label="top section"
           className="p-5 flex flex-col md:flex-row items-stretch gap-6 md:items-center"

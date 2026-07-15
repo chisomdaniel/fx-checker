@@ -19,7 +19,7 @@ export default function CompareItem({
   return (
     <div
       id={key}
-      className="flex gap-2.5 md:gap-5 items-center p-3 md:px-4 rounded-[10px] bg-neutral-600 border-neutral-500 border focus:shadow-tab"
+      className="flex gap-2.5 md:gap-5 items-center p-3 md:px-4 rounded-[10px] bg-neutral-600 border-neutral-500 border focus:outline-none focus:shadow-tab"
       tabIndex={0}
     >
       <Flags countryCode={countryCode.slice(0, 2)} alt={currency} />
