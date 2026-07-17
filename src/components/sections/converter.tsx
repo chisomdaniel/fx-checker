@@ -1,6 +1,6 @@
 import InputSection from "../input-section";
 import { ArrowUpDown, Star } from "lucide-react";
-import Button from "../button";
+import Button from "../elements/button";
 
 export default function Converter() {
   return (

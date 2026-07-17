@@ -1,5 +1,5 @@
 import DetailsTab from "../details-tab";
-import { TABS } from "../../data/details";
+import { TABS } from "../../data/constants/details";
 import type { tabs } from "@/types/details";
 import { useState } from "react";
 import History from "./history";

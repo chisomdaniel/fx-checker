@@ -1,13 +1,15 @@
-import Flags from "./flag";
+import Flags from "../icons/flag";
 import { Triangle } from "lucide-react";
 import { Search } from "lucide-react";
-import { CURRENCIES } from "@/data/currencies";
+import { CURRENCIES } from "@/data/constants/currencies";
 import { Check } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { cn } from "@/utils/cn";
 
 export default function SelectCurrency({ selected }: { selected: string }) {
   const [toggle, setToggle] = useState<"open" | "close">("close");
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+
   const popular = CURRENCIES.slice(0, 3);
   const other = CURRENCIES.slice(3);
 
@@ -19,8 +21,20 @@ export default function SelectCurrency({ selected }: { selected: string }) {
     }
   }
 
+  useEffect(() => {
+    function handleOutsideClick(event: MouseEvent) {
+      const target = event.target as Node;
+      if (wrapperRef.current && !wrapperRef.current.contains(target)) {
+        setToggle("close");
+      }
+    }
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
   return (
-    <div className="inline-block relative ">
+    <div ref={wrapperRef} className="inline-block relative ">
       <button
         tabIndex={0}
         className="cursor-pointer flex items-center p-2.5 gap-2 rounded-lg border border-neutral-400 bg-neutral-500 focus:shadow-tab focus:outline-none"

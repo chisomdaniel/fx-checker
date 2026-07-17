@@ -1,4 +1,4 @@
-import FavouritesItem from "../favorites-item";
+import FavouritesItem from "../icons/favorites-item";
 
 export default function Favorites() {
   return (

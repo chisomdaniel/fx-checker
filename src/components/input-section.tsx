@@ -1,4 +1,4 @@
-import SelectCurrency from "./select-currency";
+import SelectCurrency from "./elements/select-currency";
 
 export default function InputSection({ title }: { title: string }) {
   return (

@@ -1,5 +1,5 @@
 import { ArrowRight } from "lucide-react";
-import DeleteIcon from "./delete-icon";
+import DeleteIcon from "./icons/delete-icon";
 
 export default function LogItem({
   key,

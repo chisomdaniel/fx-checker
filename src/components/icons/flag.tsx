@@ -12,7 +12,7 @@ export default function Flags({
   size?: string;
 }) {
   const imageUrl = new URL(
-    `../assets/images/flags/${countryCode.slice(0, 2).toLowerCase()}.webp`,
+    `../../assets/images/flags/${countryCode.slice(0, 2).toLowerCase()}.webp`,
     import.meta.url,
   ).href;
 

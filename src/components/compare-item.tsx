@@ -1,5 +1,5 @@
-import Flags from "./flag";
-import FavIcon from "./fav-icon";
+import Flags from "./icons/flag";
+import FavIcon from "./icons/fav-icon";
 
 export default function CompareItem({
   countryCode,

@@ -1,5 +1,5 @@
 import Card from "../card";
-import { PERIODS } from "@/data/details";
+import { PERIODS } from "@/data/constants/details";
 import { cn } from "@/utils/cn";
 
 const VALUES = [
