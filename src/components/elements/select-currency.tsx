@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from "react";
 import { cn } from "@/utils/cn";
 import { useQuery } from "@tanstack/react-query";
 import { getCurrencies } from "@/utils/api";
+import { POPULAR_CURRENCIES } from "@/data/constants/currencies";
 
 export default function SelectCurrency({
   selected,
@@ -16,6 +17,7 @@ export default function SelectCurrency({
 }) {
   const [toggle, setToggle] = useState<"open" | "close">("close");
   const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const { data, isSuccess, isError } = useQuery({
     queryKey: ["currencies"],
@@ -52,8 +54,16 @@ export default function SelectCurrency({
     return <p>Error loading currency</p>;
   }
 
-  const popular = data.slice(0, 3);
-  const other = data.slice(3);
+  const popularCurrencies = new Set(POPULAR_CURRENCIES);
+  const popular = data.filter((each) =>
+    popularCurrencies.has(each.code.toLowerCase()),
+  );
+  const other = data.filter(
+    (each) =>
+      (each.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        each.name.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      !popularCurrencies.has(each.code.toLowerCase()),
+  );
 
   return (
     <div ref={wrapperRef} className="inline-block relative ">
@@ -86,32 +96,41 @@ export default function SelectCurrency({
             className="tp-5 text-neutral-200 border-none outline-none"
             type="text"
             placeholder="Search currencies ..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
         <div className="max-h-98.5 flex flex-col gap-1 overflow-clip overflow-y-scroll scrollbar-thin scrollbar-thumb-neutral-400 scrollbar-track-neutral-600">
-          <h3 className="flex justify-between p-2 tp-5 text-neutral-200 border-b-neutral-500 border-b">
-            <span>POPULAR</span>
-            <span>{popular.length}</span>
-          </h3>
-          <ul>
-            {popular.map((each, idx) => (
-              <li
-                key={idx}
-                className="px-2 py-3 flex justify-between items-center rounded-sm border border-neutral-600 bg-neutral-600"
-                onClick={() => setCurrency(each.code)}
-              >
-                <div className="flex gap-3 items-center">
-                  <Flags countryCode={each.code} alt={each.code + " flag"} />
-                  <p className="tp-4">{each.code}</p>
-                  <p className="tp-5 text-neutral-200">{each.name}</p>
-                </div>
+          {popular.length > 0 && (
+            <>
+              <h3 className="flex justify-between p-2 tp-5 text-neutral-200 border-b-neutral-500 border-b">
+                <span>POPULAR</span>
+                <span>{popular.length}</span>
+              </h3>
+              <ul>
+                {popular.map((each, idx) => (
+                  <li
+                    key={idx}
+                    className="px-2 py-3 flex justify-between items-center rounded-sm border border-neutral-600 bg-neutral-600"
+                    onClick={() => setCurrency(each.code)}
+                  >
+                    <div className="flex gap-3 items-center">
+                      <Flags
+                        countryCode={each.code}
+                        alt={each.code + " flag"}
+                      />
+                      <p className="tp-4">{each.code}</p>
+                      <p className="tp-5 text-neutral-200">{each.name}</p>
+                    </div>
 
-                {selected.toLowerCase() === each.code.toLowerCase() && (
-                  <Check size={16} />
-                )}
-              </li>
-            ))}
-          </ul>
+                    {selected.toLowerCase() === each.code.toLowerCase() && (
+                      <Check size={16} />
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
           <h3 className="flex justify-between p-2 tp-5 text-neutral-200 border-b-neutral-500 border-b">
             <span>OTHER CURRENCIES</span>
             <span>{other.length}</span>
