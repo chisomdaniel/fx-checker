@@ -40,7 +40,6 @@ export default function InputSection({
           placeholder="0.00"
           value={amount ?? ""}
           onChange={handleChange}
-          // readOnly={readOnly}
         />
 
         <SelectCurrency selected={selectedCurrency} setCurrency={setCurrency} />

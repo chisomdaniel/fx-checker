@@ -55,8 +55,11 @@ export default function SelectCurrency({
   }
 
   const popularCurrencies = new Set(POPULAR_CURRENCIES);
-  const popular = data.filter((each) =>
-    popularCurrencies.has(each.code.toLowerCase()),
+  const popular = data.filter(
+    (each) =>
+      popularCurrencies.has(each.code.toLowerCase()) &&
+      (each.code.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        each.name.toLowerCase().includes(searchTerm.toLowerCase())),
   );
   const other = data.filter(
     (each) =>
