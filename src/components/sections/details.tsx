@@ -1,6 +1,6 @@
 import DetailsTab from "../details-tab";
 import { TABS } from "../../data/constants/details";
-import type { tabs } from "@/types/details";
+import type { tabs } from "@/types/details.type";
 import { useState } from "react";
 import History from "./history";
 import Comparison from "./comparison";

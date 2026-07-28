@@ -1,17 +1,28 @@
 import Flags from "../icons/flag";
 import { Triangle } from "lucide-react";
 import { Search } from "lucide-react";
-import { CURRENCIES } from "@/data/constants/currencies";
 import { Check } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/utils/cn";
+import { useQuery } from "@tanstack/react-query";
+import { getCurrencies } from "@/utils/api";
 
-export default function SelectCurrency({ selected }: { selected: string }) {
+export default function SelectCurrency({
+  selected,
+  setCurrency,
+}: {
+  selected: string;
+  setCurrency: (currency: string) => void;
+}) {
   const [toggle, setToggle] = useState<"open" | "close">("close");
   const wrapperRef = useRef<HTMLDivElement | null>(null);
 
-  const popular = CURRENCIES.slice(0, 3);
-  const other = CURRENCIES.slice(3);
+  const { data, isSuccess, isError } = useQuery({
+    queryKey: ["currencies"],
+    queryFn: getCurrencies,
+    select: (data) =>
+      data.map((each) => ({ name: each.name, code: each.iso_code })),
+  });
 
   function handleHandleToggle() {
     if (toggle === "close") {
@@ -33,6 +44,17 @@ export default function SelectCurrency({ selected }: { selected: string }) {
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
+  if (!isSuccess) {
+    return <p>Loading...</p>;
+  }
+
+  if (isError) {
+    return <p>Error loading currency</p>;
+  }
+
+  const popular = data.slice(0, 3);
+  const other = data.slice(3);
+
   return (
     <div ref={wrapperRef} className="inline-block relative ">
       <button
@@ -40,8 +62,8 @@ export default function SelectCurrency({ selected }: { selected: string }) {
         className="cursor-pointer flex items-center p-2.5 gap-2 rounded-lg border border-neutral-400 bg-neutral-500 focus:shadow-tab focus:outline-none"
         onClick={handleHandleToggle}
       >
-        <Flags countryCode="us" alt="USD currency" />
-        <span>USD</span>
+        <Flags countryCode={selected} alt={`${selected} currency`} />
+        <span>{selected.toUpperCase()}</span>
         <Triangle
           size={10}
           strokeWidth={0}
@@ -66,7 +88,7 @@ export default function SelectCurrency({ selected }: { selected: string }) {
             placeholder="Search currencies ..."
           />
         </div>
-        <div className="max-h-98.5 flex flex-col gap-1 overflow-clip">
+        <div className="max-h-98.5 flex flex-col gap-1 overflow-clip overflow-y-scroll scrollbar-thin scrollbar-thumb-neutral-400 scrollbar-track-neutral-600">
           <h3 className="flex justify-between p-2 tp-5 text-neutral-200 border-b-neutral-500 border-b">
             <span>POPULAR</span>
             <span>{popular.length}</span>
@@ -76,6 +98,7 @@ export default function SelectCurrency({ selected }: { selected: string }) {
               <li
                 key={idx}
                 className="px-2 py-3 flex justify-between items-center rounded-sm border border-neutral-600 bg-neutral-600"
+                onClick={() => setCurrency(each.code)}
               >
                 <div className="flex gap-3 items-center">
                   <Flags countryCode={each.code} alt={each.code + " flag"} />
@@ -98,6 +121,7 @@ export default function SelectCurrency({ selected }: { selected: string }) {
               <li
                 key={idx}
                 className="px-2 py-3 flex justify-between items-center rounded-sm border border-neutral-600 bg-neutral-600"
+                onClick={() => setCurrency(each.code)}
               >
                 <div className="flex gap-3 items-center">
                   <Flags countryCode={each.code} alt={each.code + " flag"} />

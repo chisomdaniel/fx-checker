@@ -2,7 +2,7 @@ import { TABS } from "@/data/constants/details";
 import { cn } from "@/utils/cn";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
-import type { tabs } from "@/types/details";
+import type { tabs } from "@/types/details.type";
 
 function Badge({ num }: { num: number }) {
   return (
