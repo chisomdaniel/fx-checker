@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-export const SavedPair = z.object({
+export const SavedPairSchema = z.object({
   base: z
     .string()
     .min(1, "Base currency is required")
@@ -11,7 +11,7 @@ export const SavedPair = z.object({
     .length(3, "Currency code must be 3 characters"),
 });
 
-export const Log = z.object({
+export const LogSchema = z.object({
   baseCurrency: z
     .string()
     .min(1, "Base currency is required")
@@ -29,5 +29,5 @@ export const Log = z.object({
   createdAt: z.date().default(() => new Date()),
 });
 
-export type SavedPairType = z.infer<typeof SavedPair>;
-export type LogType = z.infer<typeof Log>;
+export type SavedPairType = z.infer<typeof SavedPairSchema>;
+export type LogType = z.infer<typeof LogSchema>;

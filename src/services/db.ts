@@ -1,10 +1,10 @@
-import { SavedPair } from "./db.schema";
+import { SavedPairSchema } from "./db.schema";
 import type { SavedPairType } from "./db.schema";
 
 class DBService {
   static savePair(base: string, quote: string) {
     const pair: SavedPairType = { base, quote };
-    const validation = SavedPair.safeParse(pair);
+    const validation = SavedPairSchema.safeParse(pair);
 
     if (!validation.success) {
       throw new Error(`Invalid pair: ${validation.error.message}`);
