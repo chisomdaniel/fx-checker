@@ -1,10 +1,11 @@
 import InputSection from "../input-section";
-import { ArrowUpDown, Star } from "lucide-react";
-import Button from "../elements/button";
+import { ArrowUpDown } from "lucide-react";
 import { useState } from "react";
 import { getCurrencyRate } from "@/utils/api";
 import { useQuery } from "@tanstack/react-query";
 import { convertCurrency } from "@/utils/converter";
+import FavoritedButton from "../favorited-button";
+import LogConversionButton from "../log-conversion-button";
 
 export default function Converter() {
   const [baseAmount, setBaseAmount] = useState<number>();
@@ -12,6 +13,8 @@ export default function Converter() {
   const [baseCurrency, setBaseCurrency] = useState<string>("usd");
   const [quoteCurrency, setQuoteCurrency] = useState<string>("eur");
   const [lastEdited, setLastEdited] = useState<"base" | "quote">("base");
+  const [favorited, setFavorited] = useState<boolean>(false);
+  const [logButtonState, setLogButtonState] = useState<"pressed" | "disabled" | "default">("default");
 
   const { data: baseRate, isSuccess } = useQuery({
     queryKey: ["currency-rate", baseCurrency, quoteCurrency],
@@ -87,11 +90,11 @@ export default function Converter() {
           </p>
 
           <div aria-label="button group" className="tp-5-medium flex gap-3">
-            <Button className="flex items-center gap-2 bg-lime-500 text-neutral-900 border-lime-500">
-              <Star size={16} fill="0A0A0A" />
-              FAVORITED
-            </Button>
-            <Button className="border-lime-500">LOG CONVERSION</Button>
+            <FavoritedButton
+              favorited={favorited}
+              setFavorited={setFavorited}
+            />
+            <LogConversionButton state={logButtonState} setState={setLogButtonState} />
           </div>
         </div>
       </div>

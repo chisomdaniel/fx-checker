@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import FavIcon from "./fav-icon";
 import { cn } from "@/utils/cn";
+import { useState } from "react";
 
 export default function FavouritesItem({
   pair1,
@@ -15,6 +16,8 @@ export default function FavouritesItem({
   change: string;
   key: string;
 }) {
+  const [stared, setStared] = useState<boolean>(false);
+
   return (
     <div
       key={key}
@@ -37,7 +40,7 @@ export default function FavouritesItem({
           {change.startsWith("+") ? "▲" : "▼"} {change}
         </p>
       </div>
-      <FavIcon stared={true} />
+      <FavIcon stared={stared} setStared={setStared} />
     </div>
   );
 }
