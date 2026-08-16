@@ -44,12 +44,13 @@ export default function DetailsTab({
       {/* for desktop/tablet screen */}
       <ul className="hidden md:flex flex-row justify-start gap-2 border-b border-b-neutral-600">
         {items.map((item, index) => (
-          <li key={index}>
+          <li tabIndex={0} key={index}>
             <a
               className={cn(
-                "h-10 tp-3 px-4 flex gap-2 justify-center items-center rounded-sm relative focus:shadow-tab",
-                activeTab === item &&
-                  "after:absolute after:left-0 after:bottom-0 after:w-full after:h-px after:bg-lime-500",
+                "h-10 tp-3 px-4 flex gap-2 justify-center items-center rounded-sm relative focus:shadow-tab, cursor-pointer",
+                "after:absolute after:left-0 after:bottom-0 after:w-full after:h-px after:bg-lime-500",
+                "after:scale-x-0 after:origin-bottom-right after:transition-transform after:duration-300 after:ease-out hover:after:scale-x-100 hover:after:origin-bottom-left",
+                activeTab === item && "after:scale-x-100",
               )}
               onClick={(e) => handleSelect(e, item)}
             >

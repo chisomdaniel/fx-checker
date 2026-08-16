@@ -22,6 +22,17 @@ class DBService {
     localStorage.setItem("savedPairs", JSON.stringify(savedPairs));
   }
 
+  static isSaved(base: string, quote: string): boolean {
+    const savedPairs = DBService.getSavedPairs();
+    const exists = savedPairs.find(
+      (pair) => pair.base === base && pair.quote === quote,
+    );
+    if (exists) {
+      return true; // Pair already exists, do not save again
+    }
+    return false;
+  }
+
   static getSavedPairs(): SavedPairType[] {
     const savedPairs = localStorage.getItem("savedPairs");
     if (!savedPairs) {
@@ -39,4 +50,4 @@ class DBService {
   }
 }
 
-export default new DBService();
+export default DBService;

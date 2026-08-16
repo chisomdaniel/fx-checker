@@ -1,19 +1,43 @@
 import Button from "./elements/button";
 import { Star } from "lucide-react";
 import { cn } from "@/utils/cn";
+import db from "@/services/db";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export default function FavoritedButton({
+  baseCurrency = "usd",
+  quoteCurrency = "eur",
   favorited = false,
   disabled = false,
-  setFavorited,
 }: {
+  baseCurrency: string;
+  quoteCurrency: string;
   favorited?: boolean;
   disabled?: boolean;
-  setFavorited: (favorited: boolean) => void;
 }) {
-  function handleClick() {
-    setFavorited(!favorited);
+  function handlePair(base: string, quote: string) {
+    if (db.isSaved(base, quote)) {
+      db.removeSavedPair(base, quote);
+    } else {
+      db.savePair(base, quote);
+    }
   }
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: () => Promise.resolve(handlePair(baseCurrency, quoteCurrency)),
+    onSuccess: () => {
+      // Invalidate the query to refetch the saved pairs
+      queryClient.invalidateQueries({ queryKey: ["favorites"] });
+    },
+  });
+
+  function handleClick() {
+    if (disabled) return;
+    mutation.mutate();
+  }
+
   return (
     <Button
       onClick={handleClick}
@@ -35,7 +59,7 @@ export default function FavoritedButton({
           favorited === true && "stroke-neutral-900 fill-neutral-900",
         )}
       />
-      FAVORITED
+      {mutation.isPending ? "SAVING..." : favorited ? "FAVORITED" : "FAVORITE"}
     </Button>
   );
 }

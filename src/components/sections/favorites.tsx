@@ -1,35 +1,40 @@
 import FavouritesItem from "../icons/favorites-item";
+import { useQuery } from "@tanstack/react-query";
+import DB from "@/services/db";
+import EmptyState from "../empty-state";
 
 export default function Favorites() {
+  const { data: favorites, isSuccess } = useQuery({
+    queryKey: ["favorites"],
+    queryFn: DB.getSavedPairs,
+  });
+
   return (
     <section className="p-4 md:p-5 flex flex-col gap-5 rounded-2xl bg-neutral-700 border border-neutral-700">
       <div className="flex justify-between items-center">
         <h2>PINNED PAIRS</h2>
         <p className="tp-5 text-neutral-50 opacity-75">10 FAVORITES</p>
       </div>
-      <div className="flex flex-col gap-3">
-        <FavouritesItem
-          change="+0.16%"
-          pair1="USD"
-          pair2="EUR"
-          rate="0.8530"
-          key={"eur"}
+      {isSuccess && favorites.length <= 0 ? (
+        <EmptyState
+          title="No pinned pairs yet"
+          description="Pin a pair to track its rate here. Tap the star icon on any conversion or comparison row."
         />
-        <FavouritesItem
-          change="-0.22%"
-          pair1="USD"
-          pair2="GBP"
-          rate="1.3575"
-          key={"gbp"}
-        />
-        <FavouritesItem
-          change="+0.04%"
-          pair1="USD"
-          pair2="JPY"
-          rate="157.91"
-          key="jpy"
-        />
-      </div>
+      ) : isSuccess ? (
+        <div className="flex flex-col gap-3">
+          {favorites.map((pair, idx) => (
+            <FavouritesItem
+              change="+0.16%"
+              pair1={pair.base.toUpperCase()}
+              pair2={pair.quote.toUpperCase()}
+              rate="0.8530"
+              key={String(idx)}
+            />
+          ))}
+        </div>
+      ) : (
+        <p>Error loading favorites</p>
+      )}
     </section>
   );
 }

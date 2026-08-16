@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { convertCurrency } from "@/utils/converter";
 import FavoritedButton from "../favorited-button";
 import LogConversionButton from "../log-conversion-button";
+import db from "@/services/db";
 
 export default function Converter() {
   const [baseAmount, setBaseAmount] = useState<number>();
@@ -13,12 +14,18 @@ export default function Converter() {
   const [baseCurrency, setBaseCurrency] = useState<string>("usd");
   const [quoteCurrency, setQuoteCurrency] = useState<string>("eur");
   const [lastEdited, setLastEdited] = useState<"base" | "quote">("base");
-  const [favorited, setFavorited] = useState<boolean>(false);
-  const [logButtonState, setLogButtonState] = useState<"pressed" | "disabled" | "default">("default");
+  const [logButtonState, setLogButtonState] = useState<
+    "pressed" | "disabled" | "default"
+  >("default");
 
   const { data: baseRate, isSuccess } = useQuery({
     queryKey: ["currency-rate", baseCurrency, quoteCurrency],
     queryFn: () => getCurrencyRate(baseCurrency, quoteCurrency),
+  });
+
+  const { data: isFavorite } = useQuery({
+    queryKey: ["favorites", baseCurrency, quoteCurrency],
+    queryFn: () => Promise.resolve(db.isSaved(baseCurrency, quoteCurrency)),
   });
 
   const convertedBaseAmount =
@@ -91,10 +98,14 @@ export default function Converter() {
 
           <div aria-label="button group" className="tp-5-medium flex gap-3">
             <FavoritedButton
-              favorited={favorited}
-              setFavorited={setFavorited}
+              baseCurrency={baseCurrency}
+              quoteCurrency={quoteCurrency}
+              favorited={isFavorite}
             />
-            <LogConversionButton state={logButtonState} setState={setLogButtonState} />
+            <LogConversionButton
+              state={logButtonState}
+              setState={setLogButtonState}
+            />
           </div>
         </div>
       </div>

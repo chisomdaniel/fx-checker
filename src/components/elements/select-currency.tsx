@@ -7,6 +7,7 @@ import { cn } from "@/utils/cn";
 import { useQuery } from "@tanstack/react-query";
 import { getCurrencies } from "@/utils/api";
 import { POPULAR_CURRENCIES } from "@/data/constants/currencies";
+import Spinner from "../spinner";
 
 export default function SelectCurrency({
   selected,
@@ -47,7 +48,7 @@ export default function SelectCurrency({
   }, []);
 
   if (!isSuccess) {
-    return <p>Loading...</p>;
+    return <Spinner />;
   }
 
   if (isError) {
@@ -114,8 +115,9 @@ export default function SelectCurrency({
                 {popular.map((each, idx) => (
                   <li
                     key={idx}
-                    className="px-2 py-3 flex justify-between items-center rounded-sm border border-neutral-600 bg-neutral-600"
+                    className="px-2 py-3 cursor-pointer hover:bg-neutral-500 flex justify-between items-center rounded-sm border border-neutral-600 bg-neutral-600"
                     onClick={() => setCurrency(each.code)}
+                    tabIndex={0}
                   >
                     <div className="flex gap-3 items-center">
                       <Flags
@@ -142,8 +144,9 @@ export default function SelectCurrency({
             {other.map((each, idx) => (
               <li
                 key={idx}
-                className="px-2 py-3 flex justify-between items-center rounded-sm border border-neutral-600 bg-neutral-600"
+                className="px-2 py-3 cursor-pointer hover:bg-neutral-500 flex justify-between items-center rounded-sm border border-neutral-600 bg-neutral-600"
                 onClick={() => setCurrency(each.code)}
+                tabIndex={0}
               >
                 <div className="flex gap-3 items-center">
                   <Flags countryCode={each.code} alt={each.code + " flag"} />

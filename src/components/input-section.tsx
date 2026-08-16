@@ -1,4 +1,5 @@
 import SelectCurrency from "./elements/select-currency";
+import Spinner from "./spinner";
 
 export default function InputSection({
   title,
@@ -26,8 +27,8 @@ export default function InputSection({
 
   return (
     <div className="p-5 flex flex-col grow gap-5 rounded-2xl bg-neutral-600 border-neutral-500 border">
-      <h3 className="tp-4 text-neutral-100">
-        {title} {isLoading && <span> Loading...</span>}
+      <h3 className="flex items-center tp-4 text-neutral-100">
+        {title} {isLoading && <Spinner className="ml-2" />}
       </h3>
       <div className="flex w-full min-w-0 items-center justify-between gap-3">
         {/* <p className="tp-1-tablet lg:tp-1">1,000</p> */}
