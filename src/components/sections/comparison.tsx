@@ -16,7 +16,6 @@ export default function Comparison() {
           amount={1000}
           currency="Nigerian Naira"
           rate={1350}
-          favorite={true}
           key="ngn"
         />
         <CompareItem

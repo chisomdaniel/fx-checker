@@ -31,8 +31,8 @@ export default function Favorites({
           {favorites.map((pair, idx) => (
             <FavouritesItem
               change="+0.16%"
-              pair1={pair.base.toUpperCase()}
-              pair2={pair.quote.toUpperCase()}
+              pair1={pair.base}
+              pair2={pair.quote}
               rate="0.8530"
               key={String(idx)}
               setBaseCurrency={setBaseCurrency}

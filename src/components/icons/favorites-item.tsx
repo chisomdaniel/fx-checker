@@ -1,7 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import FavIcon from "./fav-icon";
 import { cn } from "@/utils/cn";
-import { useState } from "react";
 
 export default function FavouritesItem({
   pair1,
@@ -20,8 +19,6 @@ export default function FavouritesItem({
   setBaseCurrency: (currency: string) => void;
   setQuoteCurrency: (currency: string) => void;
 }) {
-  const [stared, setStared] = useState<boolean>(false);
-
   function handleClick() {
     setBaseCurrency(pair1.toLowerCase());
     setQuoteCurrency(pair2.toLowerCase());
@@ -35,9 +32,9 @@ export default function FavouritesItem({
       onClick={handleClick}
     >
       <div className="flex gap-2 grow items-center">
-        <p>{pair1}</p>
+        <p>{pair1.toUpperCase()}</p>
         <ArrowRight size={12} className="stroke-neutral-200" />
-        <p>{pair2}</p>
+        <p>{pair2.toUpperCase()}</p>
       </div>
       <div className="flex flex-col gap-1.5">
         <p className="tp-3">{rate}</p>
@@ -50,7 +47,7 @@ export default function FavouritesItem({
           {change.startsWith("+") ? "▲" : "▼"} {change}
         </p>
       </div>
-      <FavIcon stared={stared} setStared={setStared} />
+      <FavIcon baseCurrency={pair1} quoteCurrency={pair2} />
     </div>
   );
 }

@@ -6,14 +6,12 @@ export default function CompareItem({
   currency,
   rate,
   amount,
-  favorite,
   key,
 }: {
   countryCode: string;
   currency: string;
   rate: number;
   amount: number;
-  favorite?: boolean;
   key: string;
 }) {
   return (
@@ -32,7 +30,7 @@ export default function CompareItem({
         <p className="tp-6 text-neutral-200">@ {rate.toLocaleString()}</p>
       </div>
 
-      <FavIcon stared={favorite} />
+      <FavIcon baseCurrency={countryCode} quoteCurrency={currency} />
     </div>
   );
 }
