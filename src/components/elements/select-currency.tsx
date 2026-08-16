@@ -24,7 +24,10 @@ export default function SelectCurrency({
     queryKey: ["currencies"],
     queryFn: getCurrencies,
     select: (data) =>
-      data.map((each) => ({ name: each.name, code: each.iso_code })),
+      data.map((each) => ({
+        name: each.name,
+        code: each.iso_code.toLowerCase(),
+      })),
   });
 
   function handleHandleToggle() {
@@ -124,7 +127,7 @@ export default function SelectCurrency({
                         countryCode={each.code}
                         alt={each.code + " flag"}
                       />
-                      <p className="tp-4">{each.code}</p>
+                      <p className="tp-4">{each.code.toUpperCase()}</p>
                       <p className="tp-5 text-neutral-200">{each.name}</p>
                     </div>
 
@@ -150,7 +153,7 @@ export default function SelectCurrency({
               >
                 <div className="flex gap-3 items-center">
                   <Flags countryCode={each.code} alt={each.code + " flag"} />
-                  <p className="tp-4">{each.code}</p>
+                  <p className="tp-4">{each.code.toUpperCase()}</p>
                   <p className="tp-5 text-neutral-200">{each.name}</p>
                 </div>
 

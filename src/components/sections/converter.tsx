@@ -8,11 +8,19 @@ import FavoritedButton from "../favorited-button";
 import LogConversionButton from "../log-conversion-button";
 import db from "@/services/db";
 
-export default function Converter() {
+export default function Converter({
+  baseCurrency,
+  quoteCurrency,
+  setBaseCurrency,
+  setQuoteCurrency,
+}: {
+  baseCurrency: string;
+  quoteCurrency: string;
+  setBaseCurrency: (currency: string) => void;
+  setQuoteCurrency: (currency: string) => void;
+}) {
   const [baseAmount, setBaseAmount] = useState<number>();
   const [quoteAmount, setQuoteAmount] = useState<number>();
-  const [baseCurrency, setBaseCurrency] = useState<string>("usd");
-  const [quoteCurrency, setQuoteCurrency] = useState<string>("eur");
   const [lastEdited, setLastEdited] = useState<"base" | "quote">("base");
   const [logButtonState, setLogButtonState] = useState<
     "pressed" | "disabled" | "default"

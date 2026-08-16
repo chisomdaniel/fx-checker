@@ -7,7 +7,13 @@ import Comparison from "./comparison";
 import Favorites from "./favorites";
 import Log from "./log";
 
-export default function Details() {
+export default function Details({
+  setBaseCurrency,
+  setQuoteCurrency,
+}: {
+  setBaseCurrency: (currency: string) => void;
+  setQuoteCurrency: (currency: string) => void;
+}) {
   const [activeTab, setActiveTab] = useState<tabs>("HISTORY");
   const counts = [4, 0, 0, 5];
 
@@ -21,7 +27,12 @@ export default function Details() {
       />
       {activeTab === "HISTORY" && <History currPeriod="1M" />}
       {activeTab === "COMPARE" && <Comparison />}
-      {activeTab === "FAVORITES" && <Favorites />}
+      {activeTab === "FAVORITES" && (
+        <Favorites
+          setBaseCurrency={setBaseCurrency}
+          setQuoteCurrency={setQuoteCurrency}
+        />
+      )}
       {activeTab === "LOG" && <Log />}
     </section>
   );

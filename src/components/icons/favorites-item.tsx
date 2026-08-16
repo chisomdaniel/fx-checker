@@ -9,20 +9,30 @@ export default function FavouritesItem({
   rate,
   change,
   key,
+  setBaseCurrency,
+  setQuoteCurrency,
 }: {
   pair1: string;
   pair2: string;
   rate: string;
   change: string;
   key: string;
+  setBaseCurrency: (currency: string) => void;
+  setQuoteCurrency: (currency: string) => void;
 }) {
   const [stared, setStared] = useState<boolean>(false);
+
+  function handleClick() {
+    setBaseCurrency(pair1.toLowerCase());
+    setQuoteCurrency(pair2.toLowerCase());
+  }
 
   return (
     <div
       key={key}
       className="tp-4 flex gap-5 items-center p-3 cursor-pointer md:px-4 rounded-[10px] bg-neutral-600 border-neutral-500 border hover:bg-neutral-500 focus:outline-none focus:shadow-tab"
       tabIndex={0}
+      onClick={handleClick}
     >
       <div className="flex gap-2 grow items-center">
         <p>{pair1}</p>

@@ -3,7 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import DB from "@/services/db";
 import EmptyState from "../empty-state";
 
-export default function Favorites() {
+export default function Favorites({
+  setBaseCurrency,
+  setQuoteCurrency,
+}: {
+  setBaseCurrency: (currency: string) => void;
+  setQuoteCurrency: (currency: string) => void;
+}) {
   const { data: favorites, isSuccess } = useQuery({
     queryKey: ["favorites"],
     queryFn: DB.getSavedPairs,
@@ -29,6 +35,8 @@ export default function Favorites() {
               pair2={pair.quote.toUpperCase()}
               rate="0.8530"
               key={String(idx)}
+              setBaseCurrency={setBaseCurrency}
+              setQuoteCurrency={setQuoteCurrency}
             />
           ))}
         </div>

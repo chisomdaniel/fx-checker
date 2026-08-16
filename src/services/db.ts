@@ -25,7 +25,9 @@ class DBService {
   static isSaved(base: string, quote: string): boolean {
     const savedPairs = DBService.getSavedPairs();
     const exists = savedPairs.find(
-      (pair) => pair.base === base && pair.quote === quote,
+      (pair) =>
+        pair.base.toLowerCase() === base.toLowerCase() &&
+        pair.quote.toLowerCase() === quote.toLowerCase(),
     );
     if (exists) {
       return true; // Pair already exists, do not save again
