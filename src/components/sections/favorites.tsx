@@ -19,7 +19,9 @@ export default function Favorites({
     <section className="p-4 md:p-5 flex flex-col gap-5 rounded-2xl bg-neutral-700 border border-neutral-700">
       <div className="flex justify-between items-center">
         <h2>PINNED PAIRS</h2>
-        <p className="tp-5 text-neutral-50 opacity-75">10 FAVORITES</p>
+        <p className="tp-5 text-neutral-50 opacity-75">
+          {favorites?.length || 0} FAVORITES
+        </p>
       </div>
       {isSuccess && favorites.length <= 0 ? (
         <EmptyState
