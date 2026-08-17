@@ -111,6 +111,10 @@ export default function Converter({
               favorited={isFavorite}
             />
             <LogConversionButton
+              baseCurrency={baseCurrency}
+              baseAmount={convertedBaseAmount}
+              quoteAmount={convertedQuoteAmount}
+              quoteCurrency={quoteCurrency}
               state={logButtonState}
               setState={setLogButtonState}
             />

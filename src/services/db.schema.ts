@@ -26,7 +26,9 @@ export const LogSchema = z.object({
   quoteAmount: z
     .number()
     .min(0, "Quote amount must be greater than or equal to 0"),
-  createdAt: z.date().default(() => new Date()),
+  createdAt: z
+    .number()
+    .min(0, "Created at timestamp must be greater than or equal to 0"),
 });
 
 export type SavedPairType = z.infer<typeof SavedPairSchema>;

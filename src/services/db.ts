@@ -1,7 +1,17 @@
-import { SavedPairSchema } from "./db.schema";
-import type { SavedPairType } from "./db.schema";
+import { SavedPairSchema, LogSchema } from "./db.schema";
+import type { SavedPairType, LogType } from "./db.schema";
+import type { tabs } from "@/types/details.type";
 
 class DBService {
+  static saveLastTab(tab: tabs) {
+    localStorage.setItem("lastTab", tab);
+  }
+
+  static getLastTab(): tabs | null {
+    const tab = localStorage.getItem("lastTab");
+    return tab as tabs | null;
+  }
+
   static savePair(base: string, quote: string) {
     const pair: SavedPairType = { base, quote };
     const validation = SavedPairSchema.safeParse(pair);
@@ -49,6 +59,37 @@ class DBService {
       (pair) => !(pair.base === base && pair.quote === quote),
     );
     localStorage.setItem("savedPairs", JSON.stringify(updatedPairs));
+  }
+
+  static log(data: LogType) {
+    const validation = LogSchema.safeParse(data);
+
+    if (!validation.success) {
+      throw new Error(`Invalid log data: ${validation.error.message}`);
+    }
+
+    // save the log to localStorage
+    const logs = DBService.getLogs();
+    logs.push(data);
+    localStorage.setItem("logs", JSON.stringify(logs));
+  }
+
+  static getLogs(): LogType[] {
+    const logs = localStorage.getItem("logs");
+    if (!logs) {
+      return [];
+    }
+    return JSON.parse(logs);
+  }
+
+  static deleteLog(timestamp: number) {
+    const logs = DBService.getLogs();
+    const updated = logs.filter((item) => item.createdAt !== timestamp);
+    localStorage.setItem("logs", JSON.stringify(updated));
+  }
+
+  static deleteAllLog() {
+    localStorage.setItem("logs", JSON.stringify([]));
   }
 }
 

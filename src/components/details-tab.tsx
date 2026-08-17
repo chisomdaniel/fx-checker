@@ -3,6 +3,7 @@ import { cn } from "@/utils/cn";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import type { tabs } from "@/types/details.type";
+import db from "@/services/db";
 
 function Badge({ num }: { num: number }) {
   return (
@@ -37,6 +38,7 @@ export default function DetailsTab({
     e.preventDefault();
     setActiveTab(tab);
     setTabState("close");
+    db.saveLastTab(tab);
   }
 
   return (

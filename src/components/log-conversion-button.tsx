@@ -1,17 +1,47 @@
 import Button from "./elements/button";
 import { cn } from "@/utils/cn";
 import { Check } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import db from "@/services/db";
+import type { LogType } from "@/services/db.schema";
 
 export default function LogConversionButton({
+  baseCurrency,
+  quoteCurrency,
+  baseAmount,
+  quoteAmount,
   state,
   setState,
 }: {
+  baseCurrency: string;
+  quoteCurrency: string;
+  baseAmount: number | undefined;
+  quoteAmount: number | undefined;
   state?: "pressed" | "disabled" | "default";
   setState: (state: "pressed" | "disabled" | "default") => void;
 }) {
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: (data: LogType) => Promise.resolve(db.log(data)),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["logs"] });
+    },
+  });
+
   function handleStateChange() {
-    if (state != "disabled") {
-      setState(state === "pressed" ? "default" : "pressed");
+    if (state != "disabled" && state != "pressed") {
+      setState("pressed");
+      mutation.mutate({
+        baseCurrency,
+        quoteCurrency,
+        baseAmount: baseAmount || 0,
+        quoteAmount: quoteAmount || 0,
+        createdAt: Date.now(),
+      });
+      setTimeout(() => {
+        setState("default");
+      }, 2000);
     }
   }
 

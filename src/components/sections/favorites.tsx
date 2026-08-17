@@ -2,6 +2,7 @@ import FavouritesItem from "../icons/favorites-item";
 import { useQuery } from "@tanstack/react-query";
 import DB from "@/services/db";
 import EmptyState from "../empty-state";
+import Spinner from "../spinner";
 
 export default function Favorites({
   setBaseCurrency,
@@ -10,7 +11,11 @@ export default function Favorites({
   setBaseCurrency: (currency: string) => void;
   setQuoteCurrency: (currency: string) => void;
 }) {
-  const { data: favorites, isSuccess } = useQuery({
+  const {
+    data: favorites,
+    isLoading,
+    isSuccess,
+  } = useQuery({
     queryKey: ["favorites"],
     queryFn: DB.getSavedPairs,
   });
@@ -23,7 +28,9 @@ export default function Favorites({
           {favorites?.length || 0} FAVORITES
         </p>
       </div>
-      {isSuccess && favorites.length <= 0 ? (
+      {isLoading ? (
+        <Spinner />
+      ) : isSuccess && favorites.length <= 0 ? (
         <EmptyState
           title="No pinned pairs yet"
           description="Pin a pair to track its rate here. Tap the star icon on any conversion or comparison row."

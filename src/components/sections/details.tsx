@@ -6,6 +6,7 @@ import History from "./history";
 import Comparison from "./comparison";
 import Favorites from "./favorites";
 import Log from "./log";
+import db from "@/services/db";
 
 export default function Details({
   setBaseCurrency,
@@ -14,7 +15,9 @@ export default function Details({
   setBaseCurrency: (currency: string) => void;
   setQuoteCurrency: (currency: string) => void;
 }) {
-  const [activeTab, setActiveTab] = useState<tabs>("HISTORY");
+  const [activeTab, setActiveTab] = useState<tabs>(
+    db.getLastTab() || "HISTORY",
+  );
   const counts = [4, 0, 0, 5];
 
   return (

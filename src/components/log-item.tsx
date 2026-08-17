@@ -1,5 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import DeleteIcon from "./icons/delete-icon";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import db from "@/services/db";
 
 export default function LogItem({
   key,
@@ -8,6 +10,7 @@ export default function LogItem({
   pair2,
   amountFrom,
   amountTo,
+  timestamp,
 }: {
   key: string;
   time: string;
@@ -15,7 +18,16 @@ export default function LogItem({
   pair2: string;
   amountFrom: number;
   amountTo: number;
+  timestamp: number;
 }) {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (id: number) => Promise.resolve(db.deleteLog(id)),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["logs"] });
+    },
+  });
+
   return (
     <div
       key={key}
@@ -30,11 +42,11 @@ export default function LogItem({
           <p>{pair2}</p>
         </div>
       </div>
-      <div>
+      <div className="flex flex-col items-end md:flex-row md:gap-5">
         <p className="tp-3 text-neutral-100">{amountFrom}</p>
         <p className="tp-3 text-lime-500">{amountTo}</p>
       </div>
-      <DeleteIcon />
+      <DeleteIcon onClick={() => mutation.mutate(timestamp)} />
     </div>
   );
 }
