@@ -5,7 +5,11 @@ import EmptyState from "../empty-state";
 import { formatTime } from "@/utils/time";
 import Spinner from "../spinner";
 
-export default function Log() {
+export default function Log({
+  setLogCount,
+}: {
+  setLogCount: (count: number) => void;
+}) {
   const {
     data: logs,
     isLoading,
@@ -23,6 +27,8 @@ export default function Log() {
       queryClient.invalidateQueries({ queryKey: ["logs"] });
     },
   });
+
+  setLogCount(logs?.length || 0);
 
   return (
     <section className="p-4 md:p-5 flex flex-col gap-5 rounded-2xl bg-neutral-700 border border-neutral-700">

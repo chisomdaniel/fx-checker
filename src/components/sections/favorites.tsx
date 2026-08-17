@@ -7,9 +7,11 @@ import Spinner from "../spinner";
 export default function Favorites({
   setBaseCurrency,
   setQuoteCurrency,
+  setFavoriteCount,
 }: {
   setBaseCurrency: (currency: string) => void;
   setQuoteCurrency: (currency: string) => void;
+  setFavoriteCount: (count: number) => void;
 }) {
   const {
     data: favorites,
@@ -19,6 +21,8 @@ export default function Favorites({
     queryKey: ["favorites"],
     queryFn: DB.getSavedPairs,
   });
+
+  setFavoriteCount(favorites?.length || 0);
 
   return (
     <section className="p-4 md:p-5 flex flex-col gap-5 rounded-2xl bg-neutral-700 border border-neutral-700">

@@ -22,7 +22,9 @@ export default function Details({
   const [activeTab, setActiveTab] = useState<tabs>(
     db.getLastTab() || "HISTORY",
   );
-  const counts = [4, 0, 0, 5];
+  const [favoriteCount, setFavoriteCount] = useState(0);
+  const [logCount, setLogCount] = useState(0);
+  const counts = [0, 0, favoriteCount, logCount];
 
   return (
     <section className="flex flex-col gap-5">
@@ -40,9 +42,10 @@ export default function Details({
         <Favorites
           setBaseCurrency={setBaseCurrency}
           setQuoteCurrency={setQuoteCurrency}
+          setFavoriteCount={setFavoriteCount}
         />
       )}
-      {activeTab === "LOG" && <Log />}
+      {activeTab === "LOG" && <Log setLogCount={setLogCount} />}
     </section>
   );
 }
