@@ -13,14 +13,20 @@ export default function Converter({
   quoteCurrency,
   setBaseCurrency,
   setQuoteCurrency,
+  baseAmount,
+  quoteAmount,
+  setBaseAmount,
+  setQuoteAmount,
 }: {
   baseCurrency: string;
   quoteCurrency: string;
   setBaseCurrency: (currency: string) => void;
   setQuoteCurrency: (currency: string) => void;
+  baseAmount: number | undefined;
+  quoteAmount: number | undefined;
+  setBaseAmount: (amount: number | undefined) => void;
+  setQuoteAmount: (amount: number | undefined) => void;
 }) {
-  const [baseAmount, setBaseAmount] = useState<number>();
-  const [quoteAmount, setQuoteAmount] = useState<number>();
   const [lastEdited, setLastEdited] = useState<"base" | "quote">("base");
   const [logButtonState, setLogButtonState] = useState<
     "pressed" | "disabled" | "default"
