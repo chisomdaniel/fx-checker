@@ -90,7 +90,7 @@ export default function SelectCurrency({
 
       <div
         className={cn(
-          "hidden absolute top-13.75 right-0 z-1 w-94 p-2 rounded-lg bg-neutral-600 border border-neutral-400 shadow-dropdown",
+          "hidden absolute top-13.75 right-0 z-1 w-77.75 md:w-94 p-2 rounded-lg bg-neutral-600 border border-neutral-400 shadow-dropdown",
           toggle === "open" ? "block" : "",
         )}
       >
