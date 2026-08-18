@@ -4,18 +4,8 @@ import { tickerData } from "@/utils/api";
 import { TOP_CURRENCIES } from "@/data/constants/currencies";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "./spinner";
-import { useState, useEffect } from "react";
 
 export default function LiveMarket() {
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsReady(true);
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, []);
-
   const {
     data: ticker,
     isLoading,
@@ -23,7 +13,6 @@ export default function LiveMarket() {
   } = useQuery({
     queryKey: ["tickerData"],
     queryFn: () => tickerData("USD", TOP_CURRENCIES),
-    enabled: isReady,
   });
 
   if (error) {
