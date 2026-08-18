@@ -44,7 +44,7 @@ export default function Comparison({
           </span>
         </h3>
         <p className="tp-5 text-neutral-50 opacity-70">
-          {CURRENCIES.length} PAIRS
+          {baseAmount === 0 ? 0 : CURRENCIES.length} PAIRS
         </p>
       </div>
       <div className="flex flex-col gap-3">

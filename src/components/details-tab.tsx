@@ -82,7 +82,9 @@ export default function DetailsTab({
         >
           <div className="flex gap-2 items-center">
             <span>{activeTab}</span>
-            <Badge num={counts[tabToIdx[activeTab]]} />
+            {counts[tabToIdx[activeTab]] > 0 && (
+              <Badge num={counts[tabToIdx[activeTab]]} />
+            )}
           </div>
           <ChevronDown />
         </button>
