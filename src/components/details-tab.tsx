@@ -13,6 +13,13 @@ function Badge({ num }: { num: number }) {
   );
 }
 
+const tabToIdx: Record<tabs, number> = {
+  HISTORY: 0,
+  COMPARE: 1,
+  FAVORITES: 2,
+  LOG: 3,
+};
+
 export default function DetailsTab({
   items,
   counts = [],
@@ -75,7 +82,7 @@ export default function DetailsTab({
         >
           <div className="flex gap-2 items-center">
             <span>{activeTab}</span>
-            <Badge num={10} />
+            <Badge num={counts[tabToIdx[activeTab]]} />
           </div>
           <ChevronDown />
         </button>
