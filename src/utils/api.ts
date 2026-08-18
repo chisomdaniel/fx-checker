@@ -45,8 +45,12 @@ export async function tickerData(
   quotes: string[],
 ): Promise<Ticker[]> {
   try {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+
     const response = await api.get(
-      `/rates?from=2026-01-01&to=2026-01-02&base=${base}&quotes=${quotes.join(",")}`,
+      `/rates?from=${yesterday.toISOString().split("T")[0]}&to=${today.toISOString().split("T")[0]}&base=${base}&quotes=${quotes.join(",")}`,
     );
     // will return a list of quotes.length * 2 (days) rates for the specified date range and quotes
 
