@@ -4,8 +4,18 @@ import { tickerData } from "@/utils/api";
 import { TOP_CURRENCIES } from "@/data/constants/currencies";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "./spinner";
+import { useState, useEffect } from "react";
 
 export default function LiveMarket() {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsReady(true);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   const {
     data: ticker,
     isLoading,
@@ -13,15 +23,8 @@ export default function LiveMarket() {
   } = useQuery({
     queryKey: ["tickerData"],
     queryFn: () => tickerData("USD", TOP_CURRENCIES),
+    enabled: isReady,
   });
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center bg-neutral-700">
-        <Spinner />
-      </div>
-    );
-  }
 
   if (error) {
     return (
@@ -40,22 +43,25 @@ export default function LiveMarket() {
         </div>
         <div className="ticker overflow-x-hidden">
           <div className="ticker-track flex items-center">
-            {ticker?.map((item) => (
-              <MarketItem
-                key={`${item.baseCurrency}/${item.quoteCurrency}`}
-                pair={`${item.baseCurrency}/${item.quoteCurrency}`}
-                change={item.change}
-                percentageChange={item.percentageChange}
-              />
-            ))}
-            {ticker?.map((item) => (
-              <MarketItem
-                key={`${item.baseCurrency}/${item.quoteCurrency}`}
-                pair={`${item.baseCurrency}/${item.quoteCurrency}`}
-                change={item.change}
-                percentageChange={item.percentageChange}
-              />
-            ))}
+            {isLoading && <Spinner />}
+            {!isLoading &&
+              ticker?.map((item) => (
+                <MarketItem
+                  key={`${item.baseCurrency}/${item.quoteCurrency}`}
+                  pair={`${item.baseCurrency}/${item.quoteCurrency}`}
+                  change={item.change}
+                  percentageChange={item.percentageChange}
+                />
+              ))}
+            {!isLoading &&
+              ticker?.map((item) => (
+                <MarketItem
+                  key={`${item.baseCurrency}/${item.quoteCurrency}`}
+                  pair={`${item.baseCurrency}/${item.quoteCurrency}`}
+                  change={item.change}
+                  percentageChange={item.percentageChange}
+                />
+              ))}
           </div>
         </div>
       </div>
