@@ -1,7 +1,36 @@
 import { Dot } from "lucide-react";
 import MarketItem from "./market-item";
+import { tickerData } from "@/utils/api";
+import { TOP_CURRENCIES } from "@/data/constants/currencies";
+import { useQuery } from "@tanstack/react-query";
+import Spinner from "./spinner";
 
 export default function LiveMarket() {
+  const {
+    data: ticker,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["tickerData"],
+    queryFn: () => tickerData("USD", TOP_CURRENCIES),
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center bg-neutral-700">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center bg-neutral-700">
+        <p className="text-red-500">Error fetching ticker data</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="flex items-center overflow-x-hidden bg-neutral-700">
@@ -11,13 +40,22 @@ export default function LiveMarket() {
         </div>
         <div className="ticker overflow-x-hidden">
           <div className="ticker-track flex items-center">
-            <MarketItem pair="EUR/USD" price="157.91" change="+0.25" />
-            <MarketItem pair="GBP/USD" price="1.2750" change="-0.01" />
-            <MarketItem pair="USD/JPY" price="150.25" change="+0.50" />
-            <MarketItem pair="AUD/USD" price="0.6520" change="+0.15" />
-            <MarketItem pair="USD/CAD" price="1.3580" change="-0.02" />
-            <MarketItem pair="AUD/USD" price="0.6520" change="+0.15" />
-            <MarketItem pair="USD/CAD" price="1.3580" change="-0.02" />
+            {ticker?.map((item) => (
+              <MarketItem
+                key={`${item.baseCurrency}/${item.quoteCurrency}`}
+                pair={`${item.baseCurrency}/${item.quoteCurrency}`}
+                change={item.change}
+                percentageChange={item.percentageChange}
+              />
+            ))}
+            {ticker?.map((item) => (
+              <MarketItem
+                key={`${item.baseCurrency}/${item.quoteCurrency}`}
+                pair={`${item.baseCurrency}/${item.quoteCurrency}`}
+                change={item.change}
+                percentageChange={item.percentageChange}
+              />
+            ))}
           </div>
         </div>
       </div>

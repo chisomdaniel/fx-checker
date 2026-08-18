@@ -1,8 +1,35 @@
-.ticker-track {
-  /* animation: ticker 20s linear infinite; */
+.ticker {
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
 }
 
-@keyframes ticker {
+.ticker-track {
+  width: max-content;
+  animation: scroll-left 120s linear infinite;
+}
+
+.ticker:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left {
   from {
     transform: translateX(0);
   }
