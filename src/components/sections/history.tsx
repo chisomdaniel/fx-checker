@@ -32,13 +32,20 @@ export default function History({
     {
       label: "CHANGE",
       amount: parseFloat(data?.change?.toPrecision(4) || "0"),
-      color: "text-green-500",
+      color: (data?.change || 0) > 0 ? "text-green-500" : "text-red-500",
     },
     {
       label: "% CHANGE",
       amount:
-        "▲ " + parseFloat(data?.percentageChange.toPrecision(4) || "0") + "%",
-      color: "text-green-500",
+        (data?.percentageChange || 0) > 0
+          ? "▲ " +
+            parseFloat(data?.percentageChange.toPrecision(4) || "0") +
+            "%"
+          : "▼" +
+            parseFloat(data?.percentageChange.toPrecision(4) || "0") +
+            "%",
+      color:
+        (data?.percentageChange || 0) > 0 ? "text-green-500" : "text-red-500",
     },
   ];
 
