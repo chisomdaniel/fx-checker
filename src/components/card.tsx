@@ -1,11 +1,14 @@
 import { cn } from "@/utils/cn";
+import Spinner from "./spinner";
 
 export default function Card({
   className,
   children,
+  isLoading,
 }: {
   className?: string;
   children: React.ReactNode;
+  isLoading?: boolean;
 }) {
   return (
     <div
@@ -14,7 +17,7 @@ export default function Card({
         className,
       )}
     >
-      {children}
+      {isLoading ? <Spinner /> : children}
     </div>
   );
 }

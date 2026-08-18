@@ -10,11 +10,13 @@ import db from "@/services/db";
 
 export default function Details({
   baseCurrency,
+  quoteCurrency,
   setBaseCurrency,
   setQuoteCurrency,
   baseAmount,
 }: {
   baseCurrency: string;
+  quoteCurrency: string;
   baseAmount?: number;
   setBaseCurrency: (currency: string) => void;
   setQuoteCurrency: (currency: string) => void;
@@ -34,7 +36,7 @@ export default function Details({
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
-      {activeTab === "HISTORY" && <History currPeriod="1M" />}
+      {activeTab === "HISTORY" && <History base={baseCurrency} quote={quoteCurrency} />}
       {activeTab === "COMPARE" && (
         <Comparison baseCurrency={baseCurrency} baseAmount={baseAmount || 0} />
       )}

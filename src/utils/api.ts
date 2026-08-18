@@ -3,6 +3,7 @@ import type { Currency } from "@/types/currency.type";
 import type { ApiError } from "@/types/error.type";
 import { calRatePercentageChange } from "@/utils/change";
 import { type Ticker } from "@/types/rates.type";
+import { PERIODS } from "@/data/constants/details";
 
 const api: AxiosInstance = axios.create({
   baseURL: "https://api.frankfurter.dev/v2",
@@ -72,6 +73,50 @@ export async function tickerData(
       },
     );
     return tickerData;
+  } catch (error) {
+    if (axios.isAxiosError<ApiError>(error)) {
+      console.log(
+        `API Error occured.\n\n\tStatus: ${error.response?.status}\nMessage: ${error.response?.data.message}`,
+      );
+    }
+    throw error;
+  }
+}
+
+export async function getPeriodData(
+  base: string,
+  quote: string,
+  period: (typeof PERIODS)[number],
+) {
+  const days: { [key in (typeof PERIODS)[number]]: number } = {
+    "1D": 1,
+    "1W": 7,
+    "1M": 30,
+    "3M": 90,
+    "1Y": 365,
+    "5Y": 1825,
+  };
+
+  const startDate = new Date();
+  startDate.setDate(startDate.getDate() - days[period]);
+  const endDate = new Date();
+
+  try {
+    const response = await api.get(
+      `https://api.frankfurter.dev/v2/rate/${base}/${quote}?date=${startDate.toISOString().split("T")[0]}`,
+    );
+    const opening = response.data.rate;
+    const closingResponse = await api.get(
+      `https://api.frankfurter.dev/v2/rate/${base}/${quote}?date=${endDate.toISOString().split("T")[0]}`,
+    );
+    const closing = closingResponse.data.rate;
+
+    return {
+      opening,
+      closing,
+      change: closing - opening,
+      percentageChange: calRatePercentageChange(opening, closing),
+    };
   } catch (error) {
     if (axios.isAxiosError<ApiError>(error)) {
       console.log(

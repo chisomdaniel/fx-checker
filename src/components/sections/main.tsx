@@ -22,6 +22,7 @@ export default function Main() {
           setQuoteAmount={setQuoteAmount}
         />
         <Details
+          quoteCurrency={quoteCurrency}
           baseCurrency={baseCurrency}
           baseAmount={baseAmount}
           setBaseCurrency={setBaseCurrency}
