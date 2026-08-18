@@ -1,20 +1,19 @@
 import { ArrowRight } from "lucide-react";
 import FavIcon from "./fav-icon";
 import { cn } from "@/utils/cn";
+import { getPeriodData } from "@/utils/api";
+import { useQuery } from "@tanstack/react-query";
+import Spinner from "../spinner";
 
 export default function FavouritesItem({
   pair1,
   pair2,
-  rate,
-  change,
   key,
   setBaseCurrency,
   setQuoteCurrency,
 }: {
   pair1: string;
   pair2: string;
-  rate: string;
-  change: string;
   key: string;
   setBaseCurrency: (currency: string) => void;
   setQuoteCurrency: (currency: string) => void;
@@ -23,6 +22,11 @@ export default function FavouritesItem({
     setBaseCurrency(pair1.toLowerCase());
     setQuoteCurrency(pair2.toLowerCase());
   }
+
+  const { data: periodData, isLoading } = useQuery({
+    queryKey: ["periodData", pair1, pair2],
+    queryFn: () => getPeriodData(pair1, pair2, "1D"),
+  });
 
   return (
     <div
@@ -36,15 +40,24 @@ export default function FavouritesItem({
         <ArrowRight size={12} className="stroke-neutral-200" />
         <p>{pair2.toUpperCase()}</p>
       </div>
-      <div className="flex flex-col gap-1.5">
-        <p className="tp-3">{rate}</p>
+      <div className="flex flex-col gap-1.5 items-end">
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <p className="tp-3">
+            {parseFloat(periodData?.change?.toPrecision(5) || "0")}
+          </p>
+        )}
         <p
           className={cn(
             "tp-6",
-            change.startsWith("+") ? "text-green-500" : "text-red-500",
+            (periodData?.percentageChange || 0) >= 0
+              ? "text-green-500"
+              : "text-red-500",
           )}
         >
-          {change.startsWith("+") ? "▲" : "▼"} {change}
+          {(periodData?.percentageChange || 0) >= 0 ? "▲" : "▼"}{" "}
+          {(periodData?.percentageChange?.toFixed(2).toString() || "0") + "%"}
         </p>
       </div>
       <FavIcon baseCurrency={pair1} quoteCurrency={pair2} />

@@ -43,10 +43,8 @@ export default function Favorites({
         <div className="flex flex-col gap-3">
           {favorites.map((pair, idx) => (
             <FavouritesItem
-              change="+0.16%"
               pair1={pair.base}
               pair2={pair.quote}
-              rate="0.8530"
               key={String(idx)}
               setBaseCurrency={setBaseCurrency}
               setQuoteCurrency={setQuoteCurrency}
