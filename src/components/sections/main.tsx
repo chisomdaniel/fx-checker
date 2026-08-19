@@ -1,12 +1,26 @@
 import { useState } from "react";
 import Converter from "./converter";
 import Details from "./details";
+import db from "@/services/db";
+import { useEffect } from "react";
 
 export default function Main() {
-  const [baseCurrency, setBaseCurrency] = useState<string>("usd");
-  const [quoteCurrency, setQuoteCurrency] = useState<string>("eur");
+  const [baseCurrency, setBaseCurrency] = useState<string>(
+    db.getLastBaseCurrency() || "usd",
+  );
+  const [quoteCurrency, setQuoteCurrency] = useState<string>(
+    db.getLastQuoteCurrency() || "eur",
+  );
   const [baseAmount, setBaseAmount] = useState<number>();
   const [quoteAmount, setQuoteAmount] = useState<number>();
+
+  useEffect(() => {
+    db.saveLastBaseCurrency(baseCurrency);
+  }, [baseCurrency]);
+
+  useEffect(() => {
+    db.saveLastQuoteCurrency(quoteCurrency);
+  }, [quoteCurrency]);
 
   return (
     <main className="flex flex-col items-center">

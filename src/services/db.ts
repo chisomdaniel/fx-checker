@@ -12,6 +12,24 @@ class DBService {
     return tab as tabs | null;
   }
 
+  static saveLastBaseCurrency(base: string) {
+    localStorage.setItem("baseCurr", base);
+  }
+
+  static getLastBaseCurrency(): string | null {
+    const base = localStorage.getItem("baseCurr");
+    return base;
+  }
+
+  static saveLastQuoteCurrency(quote: string) {
+    localStorage.setItem("quoteCurr", quote);
+  }
+
+  static getLastQuoteCurrency(): string | null {
+    const quote = localStorage.getItem("quoteCurr");
+    return quote;
+  }
+
   static savePair(base: string, quote: string) {
     const pair: SavedPairType = { base, quote };
     const validation = SavedPairSchema.safeParse(pair);
