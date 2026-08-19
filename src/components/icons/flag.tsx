@@ -15,7 +15,7 @@ export default function Flags({
     "https://purecatamphetamine.github.io/country-flag-icons/3x2/XO.svg";
   const addDefaultImg = (ev: React.SyntheticEvent<HTMLImageElement, Event>) => {
     ev.currentTarget.src = fallbackUrl;
-    ev.currentTarget?.classList.add("grayscale");
+    // ev.currentTarget?.classList.add("grayscale");
     ev.currentTarget.onerror = null; // prevents looping
   };
   return (
