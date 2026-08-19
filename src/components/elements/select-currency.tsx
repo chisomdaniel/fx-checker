@@ -50,6 +50,11 @@ export default function SelectCurrency({
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, []);
 
+  function handleSelect(each: { name: string; code: string }) {
+    setCurrency(each.code);
+    setToggle("close");
+  }
+
   if (!isSuccess) {
     return <Spinner />;
   }
@@ -119,7 +124,7 @@ export default function SelectCurrency({
                   <li
                     key={idx}
                     className="px-2 py-3 cursor-pointer hover:bg-neutral-500 flex justify-between items-center rounded-sm border border-neutral-600 bg-neutral-600"
-                    onClick={() => setCurrency(each.code)}
+                    onClick={() => handleSelect(each)}
                     tabIndex={0}
                   >
                     <div className="flex gap-3 items-center">
@@ -148,7 +153,7 @@ export default function SelectCurrency({
               <li
                 key={idx}
                 className="px-2 py-3 cursor-pointer hover:bg-neutral-500 flex justify-between items-center rounded-sm border border-neutral-600 bg-neutral-600"
-                onClick={() => setCurrency(each.code)}
+                onClick={() => handleSelect(each)}
                 tabIndex={0}
               >
                 <div className="flex gap-3 items-center">
