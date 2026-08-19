@@ -16,7 +16,6 @@ export default function LiveMarket() {
   });
 
   if (error) {
-    console.error("Error fetching ticker data:", error);
     return (
       <div className="flex items-center justify-center bg-neutral-700">
         <p className="text-red-500">Error fetching ticker data</p>
