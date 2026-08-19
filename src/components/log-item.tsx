@@ -43,8 +43,8 @@ export default function LogItem({
         </div>
       </div>
       <div className="flex flex-col items-end md:flex-row md:gap-5">
-        <p className="tp-3 text-neutral-100">{amountFrom}</p>
-        <p className="tp-3 text-lime-500">{amountTo}</p>
+        <p className="tp-3 text-neutral-100">{amountFrom.toLocaleString()}</p>
+        <p className="tp-3 text-lime-500">{amountTo.toLocaleString()}</p>
       </div>
       <DeleteIcon onClick={() => mutation.mutate(timestamp)} />
     </div>
