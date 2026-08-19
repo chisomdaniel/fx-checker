@@ -8,13 +8,13 @@ import Spinner from "../spinner";
 export default function FavouritesItem({
   pair1,
   pair2,
-  key,
+  idx,
   setBaseCurrency,
   setQuoteCurrency,
 }: {
   pair1: string;
   pair2: string;
-  key: string;
+  idx: number;
   setBaseCurrency: (currency: string) => void;
   setQuoteCurrency: (currency: string) => void;
 }) {
@@ -30,7 +30,7 @@ export default function FavouritesItem({
 
   return (
     <div
-      key={key}
+      key={idx}
       className="tp-4 flex gap-5 items-center p-3 cursor-pointer md:px-4 rounded-[10px] bg-neutral-600 border-neutral-500 border hover:bg-neutral-500 focus:outline-none focus:shadow-tab"
       tabIndex={0}
       onClick={handleClick}

@@ -1,6 +1,5 @@
 export const POPULAR_CURRENCIES = ["usd", "eur", "gbp"];
 export const TOP_CURRENCIES = [
-  "usd",
   "eur",
   "gbp",
   "ngn",

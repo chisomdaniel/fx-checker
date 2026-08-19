@@ -48,10 +48,12 @@ export async function tickerData(
   try {
     const today = new Date();
     const yesterday = new Date(today);
+    const twodays = new Date(today);
+    twodays.setDate(today.getDate() - 2);
     yesterday.setDate(today.getDate() - 1);
 
     const response = await api.get(
-      `/rates?from=${yesterday.toISOString().split("T")[0]}&to=${today.toISOString().split("T")[0]}&base=${base}&quotes=${quotes.join(",")}`,
+      `/rates?from=${twodays.toISOString().split("T")[0]}&to=${yesterday.toISOString().split("T")[0]}&base=${base}&quotes=${quotes.join(",")}`,
     );
     // will return a list of quotes.length * 2 (days) rates for the specified date range and quotes
 

@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import DB from "@/services/db";
 import EmptyState from "../empty-state";
 import Spinner from "../spinner";
+import { useEffect } from "react";
 
 export default function Favorites({
   setBaseCurrency,
@@ -22,7 +23,10 @@ export default function Favorites({
     queryFn: DB.getSavedPairs,
   });
 
-  setFavoriteCount(favorites?.length || 0);
+  useEffect(
+    () => setFavoriteCount(favorites?.length || 0),
+    [favorites?.length, setFavoriteCount],
+  );
 
   return (
     <section className="p-4 md:p-5 flex flex-col gap-5 rounded-2xl bg-neutral-700 border border-neutral-700">
@@ -45,9 +49,10 @@ export default function Favorites({
             <FavouritesItem
               pair1={pair.base}
               pair2={pair.quote}
-              key={String(idx)}
+              idx={idx}
               setBaseCurrency={setBaseCurrency}
               setQuoteCurrency={setQuoteCurrency}
+              key={String(idx)}
             />
           ))}
         </div>
